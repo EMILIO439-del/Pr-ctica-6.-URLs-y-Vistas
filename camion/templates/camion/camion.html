@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMW | Configurador Oficial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset y Variables */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        }
+
+        :root {
+            --bmw-blue: #1c69d4;
+            --bmw-dark: #121212;
+            --text-light: #ffffff;
+            --glass-bg: rgba(20, 20, 20, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bmw-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Barra de Navegación */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: rgba(0, 0, 0, 0.85);
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-left { display: flex; align-items: center; gap: 30px; }
+        .logo img { width: 50px; height: auto; }
+        .nav-links { display: flex; list-style: none; gap: 25px; }
+        .nav-links li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .nav-links li a:hover { color: #aaaaaa; }
+        .chevron::after { content: '⌄'; position: relative; top: -2px; margin-left: 5px; }
+        
+        .nav-right { display: flex; gap: 20px; align-items: center; }
+        .icon-btn { background: none; border: none; color: white; cursor: pointer; transition: opacity 0.3s; }
+        .icon-btn:hover { opacity: 0.7; }
+
+        /* Sección Principal (Hero) */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(to right, rgba(10, 20, 30, 0.9) 0%, rgba(10, 20, 30, 0.4) 50%, rgba(10, 20, 30, 0.1) 100%),
+                        url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+            padding: 100px 80px 40px 80px;
+        }
+
+        /* Títulos Izquierda */
+        .hero-content {
+            z-index: 10;
+            max-width: 400px;
+        }
+
+        .hero-subtitle { font-size: 0.9rem; letter-spacing: 6px; text-transform: uppercase; font-weight: 400; margin-bottom: 5px; color: #eaeaea; }
+        .hero-title { font-size: 6rem; font-weight: 300; line-height: 1; margin-bottom: 10px; letter-spacing: -2px; }
+        .hero-description { font-size: 1.2rem; font-weight: 300; margin-bottom: 30px; }
+        /* Estilo profesional para el campo de número */
+.spec-value input {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2); /* Línea sutil */
+    color: var(--bmw-blue);
+    font-size: 1.8rem;
+    font-weight: 700;
+    width: 60px;
+    text-align: center;
+    outline: none;
+    transition: var(--transition);
+}
+
+/* Efecto al hacer clic en el número */
+.spec-value input:focus {
+    border-bottom-color: var(--bmw-blue);
+}
+
+/* Quitar las flechas de incremento (spinners) en Chrome/Safari/Edge */
+.spec-value input::-webkit-outer-spin-button,
+.spec-value input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+        /* Panel de Configuración de la Clase (Derecha) */
+        .class-panel {
+            z-index: 15;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 30px;
+            width: 400px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .panel-header {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Atributos Estáticos (__init__) */
+        .specs-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+        .spec-item { text-align: center; }
+        .spec-value { font-size: 1.8rem; font-weight: 700; color: var(--bmw-blue); }
+        .spec-label { font-size: 0.75rem; text-transform: uppercase; color: #aaa; letter-spacing: 1px; }
+
+        /* Controles de Configuración (configurar_auto) */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            color: #ccc;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: 1px solid var(--glass-border);
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0,0,0,0.3);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 10px;
+        }
+
+        /* Checkbox Switch Estilo iOS/BMW */
+        .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #555; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--bmw-blue); }
+        input:checked + .slider:before { transform: translateX(24px); }
+
+        .btn-config {
+            width: 100%;
+            background-color: var(--bmw-blue);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        .btn-config:hover { background-color: #0d4b9f; }
+
+        /* Consola de Salida */
+        #consola {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0,0,0,0.8);
+            border-left: 3px solid #28a745;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #28a745;
+            display: none;
+            line-height: 1.5;
+        }
+
+        /* Auto de Fondo */
+        .hero-car {
+            position: absolute;
+            right: 5%;
+            bottom: 10%;
+            width: 55%;
+            max-width: 800px;
+            z-index: 5;
+        }
+        .hero-car img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        }
+
+        /* Responsividad */
+        @media (max-width: 1024px) {
+            .nav-links { display: none; }
+            .hero { padding: 100px 40px; flex-direction: column; align-items: center; text-align: center; gap: 40px; }
+            .hero-car { position: relative; right: 0; width: 90%; margin-top: 20px; bottom: 0; }
+            .class-panel { width: 100%; max-width: 500px; margin-bottom: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-left">
+            <div class="logo">BMW LOGISTICS</div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h2 class="hero-subtitle">Logística</h2>
+            <h1 class="hero-title">Camión</h1>
+            <p class="hero-description">Configuración de unidad de transporte pesada.</p>
+        </div>
+
+        <div class="class-panel">
+            <div class="panel-header">
+                <span>Configurador</span>
+                <span style="font-size: 0.8rem; color: var(--bmw-blue);">● Ready</span>
+            </div>
+
+            <div class="specs-row">
+                <div class="spec-item">
+                    <div class="spec-value">2</div>
+                    <div class="spec-label">Ejes</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">6</div>
+                    <div class="spec-label">Llantas</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Capacidad de Carga (Ton)</label>
+                <input type="number" id="inp-carga" value="15" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); color: white; border-radius: 6px;">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Longitud (m)</label>
+                <input type="number" id="inp-longitud" value="12" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); color: white; border-radius: 6px;">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Tipo de Combustible</label>
+                <select id="inp-combustible">
+                    <option value="Diesel">Diesel</option>
+                    <option value="Gasolina">Gasolina</option>
+                    <option value="Eléctrico">Eléctrico</option>
+                </select>
+            </div>
+
+            <button class="btn-config" onclick="configurarCamion()">Aplicar Configuración</button>
+
+            <div id="consola"></div>
+        </div>
+    </header>
+
+    <script>
+        function configurarCamion() {
+            const carga = document.getElementById('inp-carga').value;
+            const longitud = document.getElementById('inp-longitud').value;
+            const comb = document.getElementById('inp-combustible').value;
+
+            const consola = document.getElementById('consola');
+            consola.style.display = 'block';
+            consola.innerHTML = `> Configuración finalizada:<br>
+                                 • Carga: ${carga} Ton.<br>
+                                 • Longitud: ${longitud} m.<br>
+                                 • Combustible: ${comb}.`;
+        }
+    </script>
+</body>

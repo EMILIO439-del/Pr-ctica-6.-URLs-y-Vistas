@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMW Motorrad | Configurador Moto</title>
+    <style>
+        /* Reset y Variables */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
+        :root {
+            --bmw-blue: #1c69d4;
+            --bmw-dark: #121212;
+            --text-light: #ffffff;
+            --glass-bg: rgba(20, 20, 20, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        body { background-color: var(--bmw-dark); color: var(--text-light); overflow-x: hidden; }
+
+        /* Navegación */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background-color: rgba(0, 0, 0, 0.85); position: absolute; top: 0; width: 100%; z-index: 100; border-bottom: 1px solid var(--glass-border); }
+        .logo { font-size: 1.2rem; font-weight: 700; letter-spacing: 2px; }
+
+        /* Hero */
+        .hero { 
+            position: relative; 
+            min-height: 100vh; 
+            width: 100%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            /* Imagen actualizada */
+            background: linear-gradient(to right, rgba(10, 20, 30, 0.9) 0%, rgba(10, 20, 30, 0.4) 50%, rgba(10, 20, 30, 0.1) 100%), 
+                        url('https://mediapool.bmwgroup.com/cache/P9/201810/P90329147/P90329147-bmw-motorrad-m-performance-parts-11-2018-2094px.jpg') center/cover no-repeat; 
+            padding: 100px 80px 40px 80px; 
+        }
+        .hero-content { z-index: 10; max-width: 400px; }
+        .hero-title { font-size: 5rem; font-weight: 300; line-height: 1; margin-bottom: 10px; }
+        .hero-description { font-size: 1.1rem; color: #aaa; }
+
+        /* Panel */
+        .class-panel { z-index: 15; background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 12px; padding: 30px; width: 420px; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+        .panel-header { font-size: 1rem; font-weight: 600; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; display: flex; justify-content: space-between; }
+        .form-group { margin-bottom: 15px; }
+        .form-label { display: block; font-size: 0.75rem; color: #aaa; margin-bottom: 5px; text-transform: uppercase; }
+        input, select { width: 100%; padding: 10px; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); color: white; border-radius: 6px; }
+        .btn-action { width: 100%; background: var(--bmw-blue); color: white; padding: 12px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; margin-top: 10px; transition: 0.3s; }
+        .btn-action:hover { background: #155bb9; }
+        #consola { margin-top: 20px; padding: 15px; background: #000; border-left: 3px solid var(--bmw-blue); font-family: monospace; font-size: 0.85rem; display: none; }
+        
+        @media (max-width: 1024px) { .hero { flex-direction: column; padding: 100px 20px; } .class-panel { width: 100%; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">BMW MOTORRAD</div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>MOTO</h1>
+            <p class="hero-description">Configuración técnica y gestión de rendimiento.</p>
+        </div>
+
+        <div class="class-panel">
+            <div class="panel-header">
+                <span>Instancia: mi_moto</span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Cilindraje (cc)</label>
+                <input type="number" id="inp-cilindraje" value="150">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Transmisión</label>
+                <select id="input-transmision" style="margin-bottom: 10px;">
+                    <option value="Manual">Manual</option>
+                    <option value="Automática">Automática</option>
+                    <option value="Steptronic">Steptronic</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Tipo de Cadena</label>
+                <input type="text" id="inp-cadena" value="O-ring">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Arranque</label>
+                <input type="text" id="inp-arranque" value="Eléctrico">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Estilo</label>
+                <input type="text" id="inp-estilo" value="Deportiva">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Tipo de Batería</label>
+                <input type="text" id="inp-bateria" value="Litio">
+            </div>
+
+            <button class="btn-action" onclick="checarCadena()">Checar Cadena</button>
+            
+            <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 20px 0;">
+            
+            <div class="form-group">
+                <label class="form-label">Aumento de Cilindraje</label>
+                <input type="number" id="inp-aumento" value="50">
+            </div>
+            <button class="btn-action" onclick="aumentarCilindraje()" style="background: #333;">Aumentar Cilindraje</button>
+
+            <div id="consola"></div>
+        </div>
+    </header>
+
+    <script>
+        function checarCadena() {
+            const cadena = document.getElementById('inp-cadena').value;
+            const trans = document.getElementById('input-transmision').value;
+            const consola = document.getElementById('consola');
+            consola.style.display = 'block';
+            consola.innerHTML = `> La cadena de tipo ${cadena} está en buen estado.<br>> Transmisión: ${trans}.`;
+        }
+
+        function aumentarCilindraje() {
+            let cil = parseInt(document.getElementById('inp-cilindraje').value);
+            const aumento = parseInt(document.getElementById('inp-aumento').value);
+            
+            cil += aumento;
+            document.getElementById('inp-cilindraje').value = cil;
+            
+            const consola = document.getElementById('consola');
+            consola.style.display = 'block';
+            consola.innerHTML = `> El cilindraje ahora es de ${cil} cc.`;
+        }
+    </script>
+</body>
+</html>
