@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empleados - NexaCore</title>
+    <style>
+        :root {
+            --bg-dark: #0a0c10;
+            --laser-blue: #0055ff;
+            --neon-yellow: #ffee00;
+            --card-gray: #121620;
+        }
+        body {
+            margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg-dark); color: #e1e7f0;
+            display: flex; min-height: 100vh;
+        }
+        /* Collapsible Sidebar */
+        .sidebar {
+            width: 70px; background: #040508; transition: all 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+            overflow: hidden; border-right: 2px solid var(--laser-blue); padding: 20px 10px; box-sizing: border-box;
+            display: flex; flex-direction: column; gap: 20px;
+        }
+        .sidebar.expanded { width: 250px; }
+        .toggle-menu-btn {
+            background: var(--neon-yellow); border: none; font-weight: bold; width: 100%;
+            padding: 12px; border-radius: 4px; cursor: pointer; color: #000; text-align: center;
+        }
+        .menu-item {
+            color: #fff; background: var(--card-gray); border: 1px solid rgba(255,255,255,0.05);
+            padding: 12px; border-radius: 4px; cursor: pointer; text-decoration: none; white-space: nowrap;
+        }
+        .menu-item:hover { border-color: var(--laser-blue); box-shadow: 0 0 10px rgba(0,85,255,0.3); }
+
+        /* Main Container */
+        .main { flex: 1; padding: 40px; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;}
+        h1 { margin: 0; font-size: 2rem; border-bottom: 2px solid var(--neon-yellow); padding-bottom: 10px;}
+        
+        .employee-list { display: flex; flex-direction: column; gap: 15px; }
+        .employee-row {
+            background: var(--card-gray); border-radius: 8px; padding: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-left: 6px solid var(--laser-blue); transition: 0.2s;
+        }
+        .employee-row:hover { transform: scale(1.01); background: #171d2a; }
+        .badge { background: rgba(25ffee, 0, 0.1); color: var(--neon-yellow); padding: 5px 12px; border-radius: 4px; font-weight: bold; font-size: 0.85rem;}
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sideNav">
+        <button class="toggle-menu-btn" onclick="toggleSide()">☰</button>
+        <a href="#" class="menu-item">👥 División Alfa</a>
+        <a href="#" class="menu-item">🤖 Desarrolladores IA</a>
+        <a href="#" class="menu-item">🛠️ Soporte Operativo</a>
+        <a href="#" class="menu-item">📈 Directores de Enlace</a>
+    </div>
+
+    <div class="main">
+        <header>
+            <h1>NEXO DE COLABORADORES</h1>
+            <div class="badge">SISTEMA COMPLETO ONLINE</div>
+        </header>
+
+        <div class="employee-list">
+            <div class="employee-row">
+                <div>
+                    <strong style="font-size: 1.2rem; color: #fff;">Dra. Sarah Connor</strong>
+                    <div style="color: #7a8b9e; font-size: 0.9rem; margin-top: 5px;">Criptoanálisis & Defensa de Red</div>
+                </div>
+                <div style="text-align: right;">
+                    <span style="color: var(--laser-blue);">Acceso: Nivel 5</span>
+                    <div style="font-size: 0.8rem; margin-top: 5px; color: #55ff55;">● Sincronizado</div>
+                </div>
+            </div>
+            <div class="employee-row" style="border-left-color: var(--neon-yellow)">
+                <div>
+                    <strong style="font-size: 1.2rem; color: #fff;">K-200 Operador</strong>
+                    <div style="color: #7a8b9e; font-size: 0.9rem; margin-top: 5px;">Mantenimiento de Servidores Cuánticos</div>
+                </div>
+                <div style="text-align: right;">
+                    <span style="color: var(--neon-yellow);">Acceso: Nivel 3</span>
+                    <div style="font-size: 0.8rem; margin-top: 5px; color: #55ff55;">● Sincronizado</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSide() {
+            document.getElementById('sideNav').classList.toggle('expanded');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguridad de Usuarios - NexaCore</title>
+    <style>
+        :root {
+            --bg-black: #030305;
+            --neon-magenta: #ff00ff;
+            --neon-aqua: #00ffcc;
+        }
+        body {
+            margin: 0; font-family: 'Courier New', Courier, monospace; background: var(--bg-black); color: #fff;
+            min-height: 100vh; display: flex; flex-direction: column;
+        }
+        .top-bar {
+            background: #0d0d14; padding: 15px 30px; display: flex; justify-content: space-between;
+            border-bottom: 2px solid var(--neon-magenta); box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+        }
+        .selector-btn {
+            background: transparent; border: 1px solid var(--neon-aqua); color: var(--neon-aqua);
+            padding: 8px 16px; cursor: pointer; font-family: inherit; font-weight: bold;
+        }
+        .selector-btn:hover { background: rgba(0, 255, 204, 0.1); }
+        .submenu-slide {
+            position: absolute; top: 60px; right: 30px; background: #0d0d14; border: 1px solid var(--neon-aqua);
+            display: none; flex-direction: column; width: 250px; z-index: 20; box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+        }
+        .submenu-slide p { margin: 0; padding: 12px; font-size: 0.8rem; color: #888; border-bottom: 1px dashed #333; }
+        .submenu-slide a { color: #fff; padding: 12px; text-decoration: none; font-size: 0.9rem; }
+        .submenu-slide a:hover { background: var(--neon-aqua); color: #000; font-weight: bold; }
+
+        .auth-wrapper { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .auth-box {
+            width: 100%; max-width: 420px; background: rgba(15, 10, 25, 0.8);
+            border: 2px solid var(--neon-magenta); padding: 40px; box-shadow: 0 0 30px rgba(255, 0, 255, 0.1);
+            position: relative;
+        }
+        .auth-box::before {
+            content: "SECURITY CORE"; position: absolute; top: -12px; left: 20px;
+            background: var(--bg-black); padding: 0 10px; color: var(--neon-magenta); font-size: 0.8rem; font-weight: bold;
+        }
+        h2 { text-align: center; color: #fff; margin-bottom: 30px; letter-spacing: 2px; }
+        .field { margin-bottom: 20px; }
+        .field label { display: block; font-size: 0.8rem; color: var(--neon-aqua); margin-bottom: 8px; text-transform: uppercase;}
+        .field input {
+            width: 100%; background: #000; border: 1px solid var(--neon-magenta); padding: 12px;
+            color: #fff; box-sizing: border-box; outline: none; font-family: inherit;
+        }
+        .field input:focus { border-color: var(--neon-aqua); box-shadow: 0 0 10px var(--neon-aqua); }
+        .btn-submit {
+            width: 100%; background: transparent; border: 2px solid var(--neon-aqua); color: var(--neon-aqua);
+            padding: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; font-family: inherit;
+        }
+        .btn-submit:hover { background: var(--neon-aqua); color: #000; box-shadow: 0 0 20px var(--neon-aqua); }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div style="font-weight: bold; align-self: center;">GATEWAY_PROTOCOL v7.1</div>
+        <div style="position: relative;">
+            <button class="selector-btn" onclick="toggleSlideMenu()">⚙️ METODOS_AUTH ▼</button>
+            <div class="submenu-slide" id="slideMenu">
+                <p>Seleccionar Capa de Entrada</p>
+                <a href="#">🔑 Llave Criptográfica FIDO2</a>
+                <a href="#">👁️ Escaneo Biométrico Retiniano</a>
+                <a href="#">📱 Bypass con Autenticador Satelital</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="auth-wrapper">
+        <div class="auth-box">
+            <h2>ACCESO DE USUARIO</h2>
+            <form onsubmit="event.preventDefault(); alert('Verificando credenciales...');">
+                <div class="field">
+                    <label>Firma Digital / Alias</label>
+                    <input type="text" placeholder="root_operator" required>
+                </div>
+                <div class="field">
+                    <label>Código de Seguridad Éter</label>
+                    <input type="password" placeholder="••••••••••••" required>
+                </div>
+                <button class="btn-submit">SVAL_EJECUTAR_LOGIN()</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function toggleSlideMenu() {
+            const m = document.getElementById('slideMenu');
+            m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+        }
+    </script>
+</body>
+</html>

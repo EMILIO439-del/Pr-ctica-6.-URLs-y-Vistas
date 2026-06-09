@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix de Clientes - NexaCore</title>
+    <style>
+        :root {
+            --bg-main: #050510;
+            --bg-card: rgba(10, 10, 30, 0.75);
+            --neon-cyan: #00f0ff;
+            --neon-pink: #ff007f;
+            --text-gray: #a0a0c0;
+        }
+        body {
+            margin: 0; font-family: 'Segoe UI', Roboto, sans-serif;
+            background: radial-gradient(circle at top right, #150a25 0%, var(--bg-main) 70%);
+            color: #fff; min-height: 100vh; overflow-x: hidden;
+        }
+        /* Top Navigation Bar */
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 40px; background: rgba(5, 5, 15, 0.8);
+            border-bottom: 2px solid var(--neon-cyan); box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+        .logo { font-weight: bold; font-size: 1.5rem; letter-spacing: 2px; color: var(--neon-cyan); }
+        .logo span { color: var(--neon-pink); }
+        .nav-actions { position: relative; }
+        .menu-trigger {
+            background: transparent; border: 1px solid var(--neon-pink); color: var(--neon-pink);
+            padding: 8px 16px; cursor: pointer; border-radius: 4px; font-weight: bold;
+        }
+        .dropdown-menu {
+            position: absolute; right: 0; top: 40px; width: 200px; background: #0a0a1a;
+            border: 1px solid var(--neon-pink); display: none; flex-direction: column; z-index: 100;
+        }
+        .dropdown-menu a {
+            color: #fff; padding: 12px; text-decoration: none; font-size: 0.9rem; border-bottom: 1px solid #1a1a3a;
+        }
+        .dropdown-menu a:hover { background: var(--neon-pink); color: #000; }
+
+        /* Main Layout */
+        .layout { display: flex; min-height: calc(100vh - 75px); }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 260px; background: rgba(5, 5, 15, 0.5); padding: 30px 20px;
+            border-right: 1px solid rgba(0, 240, 255, 0.1);
+        }
+        .side-btn {
+            width: 100%; text-align: left; padding: 12px; margin-bottom: 10px;
+            background: transparent; border: 1px solid transparent; color: var(--text-gray);
+            cursor: pointer; font-size: 0.95rem; border-radius: 4px; transition: 0.3s;
+        }
+        .side-btn:hover {
+            border-color: var(--neon-cyan); color: var(--neon-cyan); background: rgba(0, 240, 255, 0.05);
+        }
+        .side-btn.active {
+            background: var(--neon-cyan); color: #000; font-weight: bold; box-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        /* Content Dashboard */
+        .main-content { flex: 1; padding: 40px; }
+        h1 { margin-top: 0; font-size: 2.3rem; letter-spacing: 3px; text-transform: uppercase; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; margin-top: 30px; }
+        .card {
+            background: var(--bg-card); border-left: 4px solid var(--neon-pink);
+            border-top: 1px solid rgba(255, 0, 127, 0.2); border-right: 1px solid rgba(255, 0, 127, 0.2); border-bottom: 1px solid rgba(255, 0, 127, 0.2);
+            border-radius: 0 12px 12px 0; padding: 25px; transition: 0.3s;
+        }
+        .card:hover {
+            box-shadow: 0 0 25px rgba(255, 0, 127, 0.25); transform: translateY(-3px);
+        }
+        .card h3 { margin: 0 0 10px 0; font-size: 1rem; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 1px;}
+        .card p { margin: 0; font-size: 2rem; font-weight: bold; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">NEXA<span>MATRIX</span></div>
+        <div class="nav-actions">
+            <button class="menu-trigger" onclick="toggleMenu('drop1')">⚙ CONFIG_PANEL ▼</button>
+            <div class="dropdown-menu" id="drop1">
+                <a href="#">Filtros Avanzados</a>
+                <a href="#">Exportar Data Encrypt</a>
+                <a href="#">Sincronizar Satélite</a>
+                <a href="#" style="color: var(--neon-pink)">Cerrar Nodo</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="layout">
+        <div class="sidebar">
+            <button class="side-btn active">⚡ Panel General</button>
+            <button class="side-btn">🎯 Clientes VIP (High-Net)</button>
+            <button class="side-btn">📊 Segmentación IA</button>
+            <button class="side-btn">🌐 Comportamiento Global</button>
+            <button class="side-btn">🛡️ Registros de Privacidad</button>
+        </div>
+        <div class="main-content">
+            <h1>Control de Enlace de Clientes</h1>
+            <div style="color: var(--neon-cyan);">ID de Red: //CLIENT-NODE-ACTIVE</div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Enlaces Activos</h3>
+                    <p>8,341,902</p>
+                </div>
+                <div class="card" style="border-left-color: var(--neon-cyan);">
+                    <h3>Fidelidad de Red</h3>
+                    <p style="color: var(--neon-cyan);">99.2%</p>
+                </div>
+                <div class="card">
+                    <h3>Tráfico Comercial</h3>
+                    <p>4.8 TB/s</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu(id) {
+            const menu = document.getElementById(id);
+            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        }
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-trigger')) {
+                document.getElementById('drop1').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

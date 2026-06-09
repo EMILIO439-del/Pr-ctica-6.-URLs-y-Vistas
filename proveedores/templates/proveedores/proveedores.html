@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proveedores - NexaCore</title>
+    <style>
+        :root {
+            --bg: #09090d;
+            --orange: #ff9f00;
+            --purple: #cc00ff;
+        }
+        body {
+            margin: 0; font-family: sans-serif; background: var(--bg); color: #e2d9eb;
+        }
+        .navbar {
+            background: #111116; border-bottom: 2px solid var(--purple); padding: 15px 30px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .menu-box { position: relative; }
+        .action-link { color: #fff; text-decoration: none; margin-left: 20px; font-weight: bold; font-size: 0.9rem;}
+        .action-link:hover { color: var(--orange); }
+        
+        .container { padding: 40px; max-width: 1200px; margin: 0 auto; }
+        .title-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;}
+        h1 { color: #fff; margin: 0; font-size: 2.2rem; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .supplier-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .supplier-card {
+            background: linear-gradient(90deg, #13131c 0%, #1a1a26 100%);
+            border: 1px solid rgba(204, 0, 255, 0.2); border-radius: 8px; padding: 25px;
+            display: flex; justify-content: space-between; align-items: center; position: relative;
+        }
+        .supplier-card:hover { border-color: var(--orange); box-shadow: 0 0 15px rgba(255, 159, 0, 0.2); }
+        
+        .options-menu {
+            position: absolute; right: 25px; top: 75px; background: #1b1b27;
+            border: 1px solid var(--orange); display: none; flex-direction: column; width: 180px; z-index: 5;
+        }
+        .options-menu button {
+            background: transparent; border: none; color: #fff; padding: 10px; text-align: left;
+            cursor: pointer; width: 100%; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .options-menu button:hover { background: var(--orange); color: #000; font-weight: bold; }
+        
+        .btn-dots {
+            background: transparent; border: 1px solid var(--purple); color: var(--purple);
+            padding: 8px 15px; cursor: pointer; border-radius: 4px; font-weight: bold;
+        }
+        .btn-dots:hover { border-color: var(--orange); color: var(--orange); }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div style="font-weight: bold; color: var(--orange); letter-spacing: 3px;">LOGÍSTICA_SUPPLY</div>
+        <div>
+            <a href="#" class="action-link">Contratos Globales</a>
+            <a href="#" class="action-link">Rutas de Envío</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="title-container">
+            <h1>Nodos de Distribución e Importación</h1>
+        </div>
+
+        <div class="supplier-grid">
+            <div class="supplier-card">
+                <div>
+                    <h3 style="margin: 0; color: #fff; font-size: 1.3rem;">Orbital Foundry Asia Ltd.</h3>
+                    <p style="margin: 5px 0 0 0; color: #a29bb0;">Material: Titanio Inteligente y Polímeros Sci-Fi</p>
+                </div>
+                <div>
+                    <button class="btn-dots" onclick="toggleActions('menu1')">ACCIONES ▼</button>
+                    <div class="options-menu" id="menu1">
+                        <button onclick="alert('Abriendo Canal Directo')">📞 Canal de Voz Encriptado</button>
+                        <button onclick="alert('Viendo tracking')">📦 Rastrear Contenedor</button>
+                        <button onclick="alert('Renovando contrato')" style="color: var(--orange);">📝 Renovar Licencia</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleActions(id) {
+            const menu = document.getElementById(id);
+            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        }
+    </script>
+</body>
+</html>
